@@ -1,10 +1,9 @@
 const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
-const { restore } = require('../../models/Product');
 
 // The `/api/tags` endpoint
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   //find all tags
   try {
     const tagData = await Tag.findAll({
@@ -19,10 +18,10 @@ router.get('/', (req, res) => {
 });
 
   //get a single tag by its `id`
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
 
   try {
-    const tagData = await.Tag.findbyPk(req.params.id, {
+    const tagData = await Tag.findbyPk(req.params.id, {
       // be sure to include its associated Product data
       include: [{ model: Product }]
     });
@@ -63,7 +62,7 @@ router.put('/:id', (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const tagData = await Tag.destroy({
       where: {id: req.params.id}
