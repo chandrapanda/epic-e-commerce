@@ -5,7 +5,6 @@ const { Category, Product } = require('../../models');
 
 router.get('/', async (req, res) => {
     //Find all categories
-
   try {
     const categoryData = await Category.findAll({
       fields: ['id'],
@@ -51,9 +50,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const updatedCategory = await Category.update(req.body, {
-      where: {
-        id: req.params.id,
-      }
+      where: {id: req.params.id,}
     });
     res.status(200).json(updatedCategory);
   } catch (err) {
@@ -68,7 +65,8 @@ router.delete('/:id', async (req, res) => {
       where: { id: req.params.id }
     });
     if (!categoryData) {
-      res.status(404).json({message: 'No category with this ID found.' });
+      res.status(404).json({message: 'Category with this ID not found.' 
+    });
       return;
     }
     res.status(200).json(categoryData);
